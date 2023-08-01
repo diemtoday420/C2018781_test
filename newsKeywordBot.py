@@ -1,9 +1,9 @@
-#step1.라이브러리 불러오기
-import  requests
-from  bs4  import  BeautifulSoup  as  bs
-import  telegram
-import  schedule
-import  time
+# step1.라이브러리 불러오기
+import requests
+from bs4 import BeautifulSoup as bs
+import telegram
+import schedule
+import time
 
 # step2.새로운 네이버 뉴스 기사 링크를 받아오는 함수
 
@@ -31,7 +31,10 @@ def get_new_links(query, old_links=[]):
 # step3.새로운 네이버 뉴스 기사가 있을 때 텔레그램으로 전송하는 함수
 def send_links(query):
     # 함수 내에서 처리된 리스트를 함수 외부에서 참조하기 위함
-    global old_links
+    global old_links_dict
+
+    # Retrieve the old links list specific to the keyword
+    old_links = old_links_dict.get(query, [])
 
     # 위에서 정의했던 함수 실행
     new_links = get_new_links(query, old_links)
@@ -47,8 +50,7 @@ def send_links(query):
         pass
 
     # 기존 링크를 계속 축적하기 위함
-
-    old_links += new_links.copy()
+    old_links_dict[query] = old_links + new_links.copy()
 
 
 # 실제 프로그램 구동
@@ -61,19 +63,17 @@ if __name__ == '__main__':
     # 가장 최근에 온 메세지의 정보 중, chat id만 가져옴 (이 chat id는 사용자(나)의 계정 id임)
     chat_id = bot.getUpdates()[-1].message.chat.id
 
+    # 검색할 키워드 설정
+    queries = ["삼성카드", "신한카드", "현대카드", "국민카드", "신용카드", "금융감독원"]
 
-    # #step4.검색할 키워드 설정
-    # query  =  input('크롤링 할 뉴스기사 키워드를 입력하세요: ')
-    queries = ["삼성카드","신한카드","현대카드","국민카드","신용카드","금융감독원"]
+    # 키워드별 이전 링크를 저장하기 위한 사전 생성
+    old_links_dict = {}
 
     for query in queries:
 
         # 위에서 얻은 chat id로 bot이 메세지를 보냄.
         bot.sendMessage(chat_id=chat_id,
                         text=f"{query}를 주제로 뉴스 기사 크롤링이 시작 되었습니다")
-
-        # step5.기존에 보냈던 링크를 담아둘 리스트 만들기
-        old_links = []
 
         # 주기적 실행과 관련된 코드 (hours는 시, minutes는 분, seconds는 초)
         # job = schedule.every(10).seconds.do(send_links, query)
