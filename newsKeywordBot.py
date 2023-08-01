@@ -25,9 +25,9 @@ def get_new_links(query, old_links=[]):
     list_links = [i.attrs['href'] for i in news_titles]
 
     # 기존의 링크와 신규 링크를 비교해서 새로운 링크만 저장
-    new_links = [link for link in list_links if link not in old_links]
+    #new_links = [link for link in list_links if link not in old_links]
 
-    return new_links
+    return list_links
 
 def send_links(query):
     # 함수 내에서 처리된 리스트를 함수 외부에서 참조하기 위함
