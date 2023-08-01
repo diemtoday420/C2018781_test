@@ -29,7 +29,6 @@ def get_new_links(query, old_links=[]):
 
     return new_links
 
-
 def send_links(query):
     # 함수 내에서 처리된 리스트를 함수 외부에서 참조하기 위함
     global old_links_dict
