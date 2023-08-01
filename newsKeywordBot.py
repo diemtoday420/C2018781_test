@@ -3,6 +3,9 @@ import requests
 from bs4 import BeautifulSoup as bs
 import telegram
 
+# 키워드별 이전 링크를 저장하기 위한 사전 생성
+old_links_dict = {}
+
 # ... (기존의 코드)
 
 def send_links(query):
