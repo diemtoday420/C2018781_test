@@ -76,7 +76,8 @@ if __name__ == '__main__':
         old_links = []
 
         # 주기적 실행과 관련된 코드 (hours는 시, minutes는 분, seconds는 초)
-        job = schedule.every(10).seconds.do(send_links, query)
+        # job = schedule.every(10).seconds.do(send_links, query)
+        send_links(query)
 
 #    while True:
 #        schedule.run_pending()
