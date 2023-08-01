@@ -1,13 +1,14 @@
-# step1.라이브러리 불러오기
-import requests
-from bs4 import BeautifulSoup as bs
-import telegram
+#step1.라이브러리 불러오기
+import  requests
+from  bs4  import  BeautifulSoup  as  bs
+import  telegram
+import  schedule
+import  time
 
 # 키워드별 이전 링크를 저장하기 위한 사전 생성
 old_links_dict = {}
 
 # step2.새로운 네이버 뉴스 기사 링크를 받아오는 함수
-
 def get_new_links(query, old_links=[]):
 
     # (주의) 네이버에서 키워드 검색 - 뉴스 탭 클릭 - 최신순 클릭 상태의 url
