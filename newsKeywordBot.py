@@ -12,7 +12,7 @@ def get_new_links(query):
     url = f'https://search.naver.com/search.naver?where=news&query={query}&sm=tab_opt&sort=1&photo=0&field=0&pd=0&ds=&de=&docid=&related=0&mynews=0&office_type=0&office_section_code=0&news_office_checked=&nso=so%3Add%2Cp%3Aall&is_sug_officeid=0'
 
     # html 문서 받아서 파싱(parsing)
-    response = requests.get(url, headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}) # 간헐적 403에러로 headers 정보추가    
+    response = requests.get(url, headers = {'User-Agent': 'Mozilla/5.0'}) # 간헐적 403에러로 headers 정보추가 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
     soup = bs(response.text, 'html.parser')
     
     # status_code 200(정상)이 아닌경우, 검색 url 제공
@@ -41,7 +41,6 @@ def send_links(query):
 
     # 없으면 패스
     else:
-        bot.sendMessage(chat_id=chat_id, text='검색 실패 된 ' + f"{query} 주제의 크롤링입니다. {new_links}")
         pass
 
 # 실제 프로그램 구동
