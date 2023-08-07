@@ -13,6 +13,11 @@ def get_new_links(query):
 
     # html 문서 받아서 파싱(parsing)
     response = requests.get(url)
+
+    # 임시 테스트
+    bot.sendMessage(chat_id=chat_id, text='url 조회결과' + f"{url}")
+    bot.sendMessage(chat_id=chat_id, text='response 조회결과' + f"{response} /// {response.text}")
+    
     soup = bs(response.text, 'html.parser')
 
     # 해당 페이지의 뉴스기사 링크가 포함된 html 요소 추출
