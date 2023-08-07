@@ -5,11 +5,8 @@ import  telegram
 import  schedule
 import  time
 
-# 키워드별 이전 링크를 저장하기 위한 사전 생성
-old_links_dict = {}
-
 # step2.새로운 네이버 뉴스 기사 링크를 받아오는 함수
-def get_new_links(query, old_links=[]):
+def get_new_links(query):
 
     # (주의) 네이버에서 키워드 검색 - 뉴스 탭 클릭 - 최신순 클릭 상태의 url
     url = f'https://search.naver.com/search.naver?where=news&query={query}&sm=tab_opt&sort=1&photo=0&field=0&pd=0&ds=&de=&docid=&related=0&mynews=0&office_type=0&office_section_code=0&news_office_checked=&nso=so%3Add%2Cp%3Aall&is_sug_officeid=0'
@@ -24,20 +21,12 @@ def get_new_links(query, old_links=[]):
     # 요소에서 링크만 추출해서 리스트로 저장
     list_links = [i.attrs['href'] for i in news_titles]
 
-    # 기존의 링크와 신규 링크를 비교해서 새로운 링크만 저장
-    new_links = [link for link in list_links if link not in old_links]
-
-    return new_links
+    return list_links
 
 def send_links(query):
-    # 함수 내에서 처리된 리스트를 함수 외부에서 참조하기 위함
-    #global old_links_dict
-
-    # Retrieve the old links list specific to the keyword
-    old_links = old_links_dict.get(query, [])
 
     # 위에서 정의했던 함수 실행
-    new_links = get_new_links(query, old_links)
+    new_links = get_new_links(query)
 
     # 새로운 메시지가 있으면 링크 전송
     if new_links:
@@ -48,9 +37,6 @@ def send_links(query):
     # 없으면 패스
     else:
         pass
-
-    # 기존 링크를 계속 축적하기 위함
-    old_links_dict[query] = old_links + new_links.copy()
 
 # 실제 프로그램 구동
 if __name__ == '__main__':
