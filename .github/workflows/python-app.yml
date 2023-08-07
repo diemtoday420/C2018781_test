@@ -7,6 +7,7 @@
 # 5분이라 걸어놓음 10분 후 쯤 15분에 알람 옴
 # cron순서 - 분 시
 
+
 name: Python application
 
 on:
