@@ -25,13 +25,13 @@ def get_new_links(query, old_links=[]):
     list_links = [i.attrs['href'] for i in news_titles]
 
     # 기존의 링크와 신규 링크를 비교해서 새로운 링크만 저장
-    #new_links = [link for link in list_links if link not in old_links]
+    new_links = [link for link in list_links if link not in old_links]
 
-    return list_links
+    return new_links
 
 def send_links(query):
     # 함수 내에서 처리된 리스트를 함수 외부에서 참조하기 위함
-    global old_links_dict
+    #global old_links_dict
 
     # Retrieve the old links list specific to the keyword
     old_links = old_links_dict.get(query, [])
@@ -59,7 +59,7 @@ if __name__ == '__main__':
     bot = telegram.Bot(token=bot_token)
 
     # 가장 최근에 온 메세지의 정보 중, chat id만 가져옴 (이 chat id는 사용자(나)의 계정 id임)
-    chat_id = '6250265022' #bot.getUpdates()[-1].message.chat.id
+    chat_id = bot.getUpdates()[-1].message.chat.id # 6250265022
 
     # 검색할 키워드 설정
     queries = ["삼성카드", "신한카드", "현대카드", "국민카드", "신용카드", "금융감독원"]
