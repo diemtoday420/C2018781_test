@@ -13,9 +13,9 @@ def get_new_links(query):
 
     # html 문서 받아서 파싱(parsing)
     headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
-    'Referer': 'https://www.google.com'  # 이 부분을 원하는 사이트로 설정해주세요.
-    }
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+        'Referer': 'https://www.google.com'
+    } # 간헐적 403 에러 방지용
     response = requests.get(url, headers=headers)
     soup = bs(response.text, 'html.parser')
     
