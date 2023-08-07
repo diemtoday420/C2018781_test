@@ -12,8 +12,11 @@ def get_new_links(query):
     url = f'https://search.naver.com/search.naver?where=news&query={query}&sm=tab_opt&sort=1&photo=0&field=0&pd=0&ds=&de=&docid=&related=0&mynews=0&office_type=0&office_section_code=0&news_office_checked=&nso=so%3Add%2Cp%3Aall&is_sug_officeid=0'
 
     # html 문서 받아서 파싱(parsing)
-    request_headers = {'User-Agent' : ('Mozilla/5.0 (Windows NT 10.0;Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'),}
-    response = requests.get(url, headers=request_headers) # 간헐적 403에러로 headers 정보추가 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+    headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+    'Referer': 'https://www.google.com'  # 이 부분을 원하는 사이트로 설정해주세요.
+    }
+    response = requests.get(url, headers=headers)
     soup = bs(response.text, 'html.parser')
     
     # status_code 200(정상)이 아닌경우, 검색 url 제공
