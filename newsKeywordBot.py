@@ -12,7 +12,8 @@ def get_new_links(query):
     url = f'https://search.naver.com/search.naver?where=news&query={query}&sm=tab_opt&sort=1&photo=0&field=0&pd=0&ds=&de=&docid=&related=0&mynews=0&office_type=0&office_section_code=0&news_office_checked=&nso=so%3Add%2Cp%3Aall&is_sug_officeid=0'
 
     # html 문서 받아서 파싱(parsing)
-    response = requests.get(url, headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
+    #response = requests.get(url, headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
+    response = requests.get(url)
     soup = bs(response.text, 'html.parser')
     
     # status_code 200(정상)이 아닌경우, 검색 url 제공
