@@ -11,7 +11,8 @@ name: Python application
 
 on:
   schedule:
-    - cron : '0 */2 * * *'
+    #- cron : '0 */2 * * *' # 매일 2시간 간격으로 정시에 실행
+    - cron : '0 8-18/3 * * 1-5' # 주말을 제외한(1-5) 매일 8~18시 사이 3시간 간격으로 실행
   push:
     branches: [ main ]
   pull_request:
