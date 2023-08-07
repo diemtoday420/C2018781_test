@@ -7,12 +7,11 @@
 # 5분이라 걸어놓음 10분 후 쯤 15분에 알람 옴
 # cron순서 - 분 시
 
-
 name: Python application
 
 on:
   schedule:
-    - cron : '5 */2 * * *'
+    - cron : '0 */2 * * *'
   push:
     branches: [ main ]
   pull_request:
