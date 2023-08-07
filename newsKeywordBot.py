@@ -17,7 +17,7 @@ def get_new_links(query):
     
     # status_code 200(정상)이 아닌경우, 검색 url 제공
     if response.status_code != 200 :
-        bot.sendMessage(chat_id=chat_id, text='response 조회결과' + f"{response.status_code}")    
+        bot.sendMessage(chat_id=chat_id, text=f"{response.status_code}"+' 에러로 파싱실패. 아래 URL을 통해 이용해주세요.')    
         bot.sendMessage(chat_id=chat_id, text='url 조회결과' + f"{url}")
     
     # 해당 페이지의 뉴스기사 링크가 포함된 html 요소 추출
