@@ -16,7 +16,6 @@ def get_new_links(query):
 
     # 임시 테스트
     bot.sendMessage(chat_id=chat_id, text='url 조회결과' + f"{url}")
-    bot.sendMessage(chat_id=chat_id, text='response 조회결과' + f"{response} /// {response.text}")
     
     soup = bs(response.text, 'html.parser')
 
