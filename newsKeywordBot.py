@@ -13,13 +13,13 @@ def get_new_links(query):
 
     # html 문서 받아서 파싱(parsing)
     response = requests.get(url, headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
-    
-    # 임시 테스트
-    bot.sendMessage(chat_id=chat_id, text='url 조회결과' + f"{url}")
-    bot.sendMessage(chat_id=chat_id, text='response 조회결과' + f"{response.status_code}")
-    
     soup = bs(response.text, 'html.parser')
-
+    
+    # status_code 200(정상)이 아닌경우, 검색 url 제공
+    if(response.status_code != 200)
+        bot.sendMessage(chat_id=chat_id, text='response 조회결과' + f"{response.status_code}")    
+        bot.sendMessage(chat_id=chat_id, text='url 조회결과' + f"{url}")
+    
     # 해당 페이지의 뉴스기사 링크가 포함된 html 요소 추출
     news_titles = soup.select('a.news_tit')
 
