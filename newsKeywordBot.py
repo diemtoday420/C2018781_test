@@ -36,6 +36,7 @@ def send_links(query):
 
     # 없으면 패스
     else:
+        bot.sendMessage(chat_id=chat_id, text='검색 실패 된 ' + f"{query} 주제의 크롤링입니다. {new_links}")
         pass
 
 # 실제 프로그램 구동
