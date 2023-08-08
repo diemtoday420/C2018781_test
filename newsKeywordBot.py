@@ -50,11 +50,11 @@ def send_links(query):
 # 실제 프로그램 구동
 if __name__ == '__main__':
     # 토큰을 변수에 저장
-    bot_token = '6661130983:AAEcYAWW-kKDIBHnKE4e9YovFvMbanYN8tQ'
+    bot_token = '6661130983:AAEcYAWW-kKDIBHnKE4e9YovFvMbanYN8tQ'  # 수정1 예) 6661130983:BBKcYAWW-kKDIBHnKE4e9YovFvMbanYN8tQ
     bot = telegram.Bot(token=bot_token)
 
     # 가장 최근에 온 메세지의 정보 중, chat id만 가져옴 (이 chat id는 사용자(나)의 계정 id임)
-    chat_id = '6250265022' # bot.getUpdates()[-1].message.chat.id
+    chat_id = '6250265022' # bot.getUpdates()[-1].message.chat.id # 수정2 예) '6250265022'와 같이 숫자로된 10글자 ID 
 
     # 검색할 키워드 설정
     queries = ["삼성카드", "신한카드", "현대카드", "국민카드", "신용카드", "금융감독원"]
