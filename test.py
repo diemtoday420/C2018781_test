@@ -42,7 +42,7 @@ def send_links(query):
     best_link = None
 
     for link in new_links:
-        response = requests.get('https://'+link, headers=headers)
+        response = requests.get(f'https://www.viva100.com/main/view.php?key=20230917010004756', headers=headers)
         soup = bs(response.text, 'html.parser')
 
         # 각 기사의 클릭수 정보 추출
