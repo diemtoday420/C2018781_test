@@ -42,7 +42,7 @@ def send_links(query):
     best_link = None
 
     for link in new_links:
-        response = requests.get(link, headers=headers)
+        response = requests.get('https://'+link, headers=headers)
         soup = bs(response.text, 'html.parser')
 
         # 각 기사의 클릭수 정보 추출
