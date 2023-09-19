@@ -35,7 +35,7 @@ def send_links(query):
     # 위에서 정의했던 함수 실행
     new_links = get_new_links(query)
     
-    if not new_links:
+    #if not new_links:
         #return  # 새로운 링크가 없으면 함수 종료
     
     # 가장 많은 클릭수를 가진 기사를 찾기 위한 변수 초기화
