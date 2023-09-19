@@ -4,14 +4,16 @@ import telegram
 import schedule
 import time
 
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+    'Referer': 'https://www.google.com'
+} # 간헐적 403 에러 방지용
+
 # 새로운 네이버 뉴스 기사 링크를 받아오는 함수
 def get_new_links(query):
     # (주의) 네이버에서 키워드 검색 - 뉴스 탭 클릭 - 최신순 클릭 상태의 url
     url = f'https://search.naver.com/search.naver?where=news&query={query}&sm=tab_opt&sort=1&photo=0&field=0&pd=0&ds=&de=&docid=&related=0&mynews=0&office_type=0&office_section_code=0&news_office_checked=&nso=so%3Add%2Cp%3Aall&is_sug_officeid=0'
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
-        'Referer': 'https://www.google.com'
-    } # 간헐적 403 에러 방지용
+
     response = requests.get(url, headers=headers)
     soup = bs(response.text, 'html.parser')
     
@@ -40,7 +42,7 @@ def send_links(query):
     best_link = None
 
     for link in new_links:
-        response = requests.get(link, timeout=15)
+        response = requests.get(link, headers=headers)
         soup = bs(response.text, 'html.parser')
 
         # 각 기사의 클릭수 정보 추출
