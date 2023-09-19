@@ -10,7 +10,6 @@ headers = {
     'Referer': 'https://www.naver.com'
 } # 간헐적 403 에러 방지용
 
-
 # 새로운 네이버 뉴스 기사 링크를 받아오는 함수
 def get_new_links(query):
     # (주의) 네이버에서 키워드 검색 - 뉴스 탭 클릭 - 최신순 클릭 상태의 url
