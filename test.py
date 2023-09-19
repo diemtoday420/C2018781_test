@@ -40,7 +40,7 @@ def send_links(query):
     best_link = None
 
     for link in new_links:
-        response = requests.get(link)
+        response = requests.get(link, timeout=15)
         soup = bs(response.text, 'html.parser')
 
         # 각 기사의 클릭수 정보 추출
