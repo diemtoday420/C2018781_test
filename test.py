@@ -58,19 +58,24 @@ def send_links(query):
         bot.sendMessage(chat_id=chat_id, text=f'방금 업데이트 된 "{query}" 주제의 크롤링입니다.')
         bot.sendMessage(chat_id=chat_id, text=best_link)
 
-# 텔레그램 봇 설정
-bot_token = '6475089075:AAF8WNH8f74V-BK-k7QTIxEXupveQO62mWE'  # 텔레그램 봇 토큰 입력
-bot = telegram.Bot(token=bot_token)
-chat_id = '614924343'  # 채팅 ID 입력
+# 실제 프로그램 구동
+if __name__ == '__main__':
+    # 토큰을 변수에 저장
+    bot_token = '6661130983:AAEcYAWW-kKDIBHnKE4e9YovFvMbanYN8tQ'  # 수정1 예) 6661130983:BBKcYAWW-kKDIBHnKE4e9YovFvMbanYN8tQ
+    bot = telegram.Bot(token=bot_token)
 
-# 검색할 키워드 설정
-queries = ["신용카드", "제휴카드", "카드사 제휴계약", "카드사 전략적제휴", "신용카드 상품", "신용카드 서비스", "PLCC", "카드사 MOU"]
+    # 가장 최근에 온 메세지의 정보 중, chat id만 가져옴 (이 chat id는 사용자(나)의 계정 id임)
+    chat_id = '6250265022' # bot.getUpdates()[-1].message.chat.id # 수정2 예) '6250265022'와 같이 숫자로된 10글자 ID 
 
-# 각 키워드별로 스케줄링 설정
-for query in queries:
-    schedule.every().day.at("07:00").do(send_links, query)
+    # 검색할 키워드 설정
+    queries = ["신용카드", "제휴카드", "카드사 제휴계약", "카드사 전략적제휴", "신용카드 상품", "신용카드 서비스", "PLCC", "카드사 MOU"]
 
-# 스케줄러 실행
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+    # 각 키워드에 대해 한 번씩 실행
+    for query in queries:
+        send_links(query)
+        time.sleep(1)
+    
+    # 프로그램이 끝났음을 알리기 위한 메시지 전송
+    bot.sendMessage(chat_id=chat_id, text='크롤링이 완료되었습니다.')
+
+# 프로그램 종료
