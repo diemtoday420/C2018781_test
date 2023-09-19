@@ -5,8 +5,9 @@ import schedule
 import time
 
 headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
-    'Referer': 'https://www.google.com'
+    #'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+    'User-Agent' : 'Mozilla/5.0 (Linux; Android 13; SAMSUNG SM-S918N/KSU2AWGJ) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/22.0 Chrome/111.0.5563.116 Mobile Safari/537.36',
+    'Referer': 'https://www.naver.com'
 } # 간헐적 403 에러 방지용
 
 
@@ -43,7 +44,7 @@ def send_links(query):
     best_link = None
 
     for link in new_links:
-        response = requests.post("https://www.viva100.com/main/view.php?key=20230917010004756", headers=headers)
+        response = requests.get(url=link, headers=headers)
         soup = bs(response.text, 'html.parser')
 
         # 각 기사의 클릭수 정보 추출
