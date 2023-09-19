@@ -50,7 +50,7 @@ def send_links(query):
         
         if clicks:
             clicks = int(clicks.text.replace(",", ""))  # 클릭수에서 쉼표 제거 후 정수로 변환
-
+            bot.sendMessage(chat_id=chat_id, text=clicks)
             # 가장 많은 클릭수를 가진 기사를 찾음
             if clicks > max_clicks:
                 max_clicks = clicks
