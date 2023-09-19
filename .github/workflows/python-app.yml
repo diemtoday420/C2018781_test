@@ -37,6 +37,6 @@ jobs:
 
       - name: samsungcardbot
         run: |
-          python newsKeywordBot.py
+          python test.py
 
 # 마지막 줄입니다.
