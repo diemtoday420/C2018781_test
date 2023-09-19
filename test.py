@@ -46,13 +46,15 @@ def send_links(query):
     for link in new_links:
         response = requests.get(url=link, headers=headers)
         soup = bs(response.text, 'html.parser')
-
+        bot.sendMessage(chat_id=chat_id, text='soup결과 : '+f"{soup}")
+        
         # 각 기사의 클릭수 정보 추출
         clicks = soup.select_one('.tomain_info span.u_cnt')
+        bot.sendMessage(chat_id=chat_id, text='clicks결과 : '+f"{clicks}")
         
         if clicks:
             clicks = int(clicks.text.replace(",", ""))  # 클릭수에서 쉼표 제거 후 정수로 변환
-            bot.sendMessage(chat_id=chat_id, text=clicks)
+            
             # 가장 많은 클릭수를 가진 기사를 찾음
             if clicks > max_clicks:
                 max_clicks = clicks
