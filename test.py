@@ -18,14 +18,11 @@ def get_new_links(query):
     # 현재 날짜와 시간 객체 생성
     now = datetime.now()
     # 포맷팅(년.월.일.시.분)
-    nowDtm = now.strftime("%Y.%m.%d.%H.%M")
-    previousDtm = (now-timedelta(days=1)).strftime("%Y.%m.%d.%H.%M")
-
-    bot.sendMessage(chat_id=chat_id, text=nowDtm+" / "+previousDtm)
-    return;
+    nowDtm = now.strftime("%Y.%m.%d.%H.%M") # 현재
+    previousDtm = (now-timedelta(days=1)).strftime("%Y.%m.%d.%H.%M") #어제
     
-    # (주의) 네이버에서 키워드 검색 - 뉴스 탭 클릭 - 최신순 클릭 상태의 url
-    url = f'https://search.naver.com/search.naver?where=news&query={query}&sm=tab_opt&sort=1&photo=0&field=0&pd=0&ds=&de=&docid=&related=0&mynews=0&office_type=0&office_section_code=0&news_office_checked=&nso=so%3Add%2Cp%3Aall&is_sug_officeid=0'
+    # (주의) 네이버에서 키워드 검색 - 뉴스 탭 클릭 - 최신순 클릭 상태 - 1일 - 메인언론사의 url
+    url = f'https://search.naver.com/search.naver?where=news&query={query}&sm=tab_opt&sort=1&photo=3&field=0&pd=4&ds={nowDtm}&de={previousDtm}&docid=&related=0&mynews=0&office_type=0&office_section_code=&news_office_checked=&nso=so%3Add%2Cp%3A1d&is_sug_officeid=0&office_category=0&service_area=1'
 
     response = requests.get(url, headers=headers)
     soup = bs(response.text, 'html.parser')
@@ -46,32 +43,20 @@ def get_new_links(query):
 def send_links(query):
     # 위에서 정의했던 함수 실행
     new_links = get_new_links(query)
-    
-    if not new_links:
-        return  # 새로운 링크가 없으면 함수 종료
-    
-    # 가장 많은 클릭수를 가진 기사를 찾기 위한 변수 초기화
-    max_clicks = 0
-    best_link = None
 
-    for link in new_links:
-        response = requests.get(url=link, headers=headers)
-        soup = bs(response.text, 'html.parser')
-        
-        # 각 기사의 클릭수 정보 추출
-        clicks = soup.select_one('.tomain_info span.u_cnt')
-        
-        if clicks:
-            clicks = int(clicks.text.replace(",", ""))  # 클릭수에서 쉼표 제거 후 정수로 변환
-            
-            # 가장 많은 클릭수를 가진 기사를 찾음
-            if clicks > max_clicks:
-                max_clicks = clicks
-                best_link = link
+    # 새로운 메시지가 있으면 링크 전송
+    if new_links:
+        bot.sendMessage(chat_id=chat_id, text=f"{query} 주제의 크롤링입니다.")
+        sendCount = 1
+        for link in new_links:
+            bot.sendMessage(chat_id=chat_id, text=link)
+            sendCount += 1
+            if sendCount==5: # 각 검색키워드별 최대 5개까지만 전송
+                break
 
-    if best_link:
-        bot.sendMessage(chat_id=chat_id, text=f'방금 업데이트 된 "{query}" 주제의 크롤링입니다.')
-        bot.sendMessage(chat_id=chat_id, text=best_link)
+    # 없으면 패스
+    else:
+        pass
 
 # 실제 프로그램 구동
 if __name__ == '__main__':
