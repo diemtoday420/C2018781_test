@@ -3,15 +3,27 @@ from bs4 import BeautifulSoup as bs
 import telegram
 import schedule
 import time
+from datetime import datetime, timedelta
 
+# header정보 선언
 headers = {
-    #'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
     'User-Agent' : 'Mozilla/5.0 (Linux; Android 13; SAMSUNG SM-S918N/KSU2AWGJ) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/22.0 Chrome/111.0.5563.116 Mobile Safari/537.36',
     'Referer': 'https://www.naver.com'
 } # 간헐적 403 에러 방지용
 
 # 새로운 네이버 뉴스 기사 링크를 받아오는 함수
 def get_new_links(query):
+
+    # 조회 기준 : 현재일자,시각-1day ~ 현재일자,시각
+    # 현재 날짜와 시간 객체 생성
+    now = datetime.now()
+    # 포맷팅(년.월.일.시.분)
+    nowDtm = now.strftime("%Y.%m.%d.%H.%M")
+    previousDtm = (now-timedelta(days=1)).strftime("%Y.%m.%d.%H.%M")
+
+    bot.sendMessage(chat_id=chat_id, text=nowDtm+" / "+previousDtm)
+    return;
+    
     # (주의) 네이버에서 키워드 검색 - 뉴스 탭 클릭 - 최신순 클릭 상태의 url
     url = f'https://search.naver.com/search.naver?where=news&query={query}&sm=tab_opt&sort=1&photo=0&field=0&pd=0&ds=&de=&docid=&related=0&mynews=0&office_type=0&office_section_code=0&news_office_checked=&nso=so%3Add%2Cp%3Aall&is_sug_officeid=0'
 
@@ -48,7 +60,6 @@ def send_links(query):
         
         # 각 기사의 클릭수 정보 추출
         clicks = soup.select_one('.tomain_info span.u_cnt')
-        bot.sendMessage(chat_id=chat_id, text='clicks결과 : '+f"{clicks}")
         
         if clicks:
             clicks = int(clicks.text.replace(",", ""))  # 클릭수에서 쉼표 제거 후 정수로 변환
