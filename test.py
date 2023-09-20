@@ -22,7 +22,7 @@ def get_new_links(query):
     previousDtm = (now-timedelta(days=1)).strftime("%Y.%m.%d.%H.%M") #어제
     
     # (주의) 네이버에서 키워드 검색 - 뉴스 탭 클릭 - 최신순 클릭 상태 - 1일 - 메인언론사의 url
-    url = f'https://search.naver.com/search.naver?where=news&query={query}&sm=tab_opt&sort=1&photo=3&field=0&pd=4&ds={nowDtm}&de={previousDtm}&docid=&related=0&mynews=0&office_type=0&office_section_code=&news_office_checked=&nso=so%3Add%2Cp%3A1d&is_sug_officeid=0&office_category=0&service_area=1'
+    url = f'https://search.naver.com/search.naver?where=news&query={query}&sm=tab_opt&sort=1&photo=0&field=0&pd=4&ds={nowDtm}&de={previousDtm}&docid=&related=0&mynews=0&office_type=0&office_section_code=0&news_office_checked=&nso=so%3Add%2Cp%3A1d&is_sug_officeid=0&office_category=0&service_area=0'
 
     response = requests.get(url, headers=headers)
     soup = bs(response.text, 'html.parser')
@@ -46,8 +46,8 @@ def send_links(query):
 
     # 새로운 메시지가 있으면 링크 전송
     if new_links:
-        bot.sendMessage(chat_id=chat_id, text=f"{query} 주제의 크롤링입니다.")
-        sendCount = 1
+        bot.sendMessage(chat_id=chat_id, text=f"[{query}] 주제의 크롤링입니다.")
+        sendCount = 0
         for link in new_links:
             bot.sendMessage(chat_id=chat_id, text=link)
             sendCount += 1
@@ -56,6 +56,7 @@ def send_links(query):
 
     # 없으면 패스
     else:
+        bot.sendMessage(chat_id=chat_id, text=f"[{query}] 주제는 검색내용이 없습니다.")
         pass
 
 # 실제 프로그램 구동
@@ -68,7 +69,7 @@ if __name__ == '__main__':
     chat_id = '6250265022' # bot.getUpdates()[-1].message.chat.id # 수정2 예) '6250265022'와 같이 숫자로된 10글자 ID 
 
     # 검색할 키워드 설정
-    queries = ["신용카드", "제휴카드", "카드사 제휴계약", "카드사 전략적제휴", "신용카드 상품", "신용카드 서비스", "PLCC", "카드사 MOU"]
+    queries = ["신용카드", "제휴카드", "카드사 +제휴계약", "카드사 +전략적제휴", "신용카드 +상품", "신용카드 +서비스", "PLCC", "카드사 +MOU"]
 
     # 각 키워드에 대해 한 번씩 실행
     for query in queries:
